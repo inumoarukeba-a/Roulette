@@ -1,0 +1,46 @@
+# ---------------------------------------------------------------
+# .gitinogreに関するTips
+#
+# あとからまとめて.gitignoreする方法
+# https://qiita.com/yuuAn/items/b1d1df2e810fd6b92574
+#
+# .gitignore ファイルをブランチごとに別の内容にする
+# https://qiita.com/matsuoshi/items/f40d60a5c0a1a169a73b
+# ---------------------------------------------------------------
+
+# ドットはじまり
+\!*
+.*
+!.htaccess
+!.htpasswd
+!.gitkeep
+!.gitignore
+!.gitmodules
+!.editorconfig
+!.babelrc
+!.image-cache
+
+# コンパイルファイル
+*.css
+bundle.js
+*.scssc
+*.map
+
+# CakePHP
+# PGさんが設定
+
+# デザインフォルダ
+_design/
+
+# NPM
+node_modules/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Other
+ssl
+/upload/*
+app.yaml
+~

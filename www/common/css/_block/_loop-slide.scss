@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+
+
+/* 設定
+=========================================================== */
+// 変数
+$item-width   : 320;      // アイテムの横幅
+$item-height  : 320;      // アイテムの高さ
+$item-margin  : 16;       // アイテムのマージン
+$item-num     : 3;        // アイテムの数
+$duration     : 25;       // アニメーションの早さ
+$hover-stop   : false;    // ホバーでストップする:true しない:false
+// $sp-mag       : 1;        // SP表示時の倍率（不要そうなので未実装）
+
+// ラップ要素の横幅を計算する関数
+@function slide-width($width, $margin, $num, $mag) {
+  @return ($width + $margin) * $num * $mag;
+}
+
+// ラップ要素の横幅を格納する変数
+$list-width   : slide-width($item-width, $item-margin, $item-num, 1);
+$wrap-width   : slide-width($item-width, $item-margin, $item-num, 2);
+
+
+
+/* .loop-slide
+=========================================================== */
+.loop-slide {
+  $this : &;
+
+  width: 100%;
+  max-width: #{$list-width}px;
+  height: #{$item-height}px;
+  box-sizing: border-box;
+  overflow: hidden;
+  @include mq-sp {
+    @include vw(max-width, $list-width * 2);
+    @include vw(height, $item-height * 2);
+  }
+
+  /* ラップ
+  −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− */
+  &__list-wrap {
+    display: flex;
+    width: #{$wrap-width}px;
+    height: inherit;
+    @include mq-sp {
+      @include vw(width, $wrap-width * 2);
+    }
+
+    /* アイテムリスト
+    −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− */
+    @at-root {
+      #{$this}__list {
+        display: flex;
+        width: #{$list-width}px;
+        height: inherit;
+        will-change: transform;
+        animation-name: loop-slide;
+        animation-timing-function: linear;
+        animation-duration: #{$duration}s;
+        animation-iteration-count: infinite;
+        @include mq-sp {
+          @include vw(width, $list-width * 2);
+        }
+
+        /* アイテム
+        −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− */
+        @at-root {
+          #{$this}__item {
+            width: #{$item-width}px;
+            margin-right: #{$item-margin}px;
+            height: inherit;
+            @include mq-sp {
+              @include vw(width, $item-height * 2);
+              @include vw(margin-right, $item-margin * 2);
+            }
+            // イメージ
+            img {
+              width: 100%;
+              height: auto;
+            }
+          }
+        }
+      }
+
+      /* ホバー時の処理
+      −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− */
+      @include mq-pc {
+        @if $hover-stop == true {
+          #{$this}__item {
+            transition: opacity .5s ease 0s;
+          }
+          &:hover {
+            #{$this}__list {
+              animation-play-state: paused;
+            }
+            #{$this}__item {
+              opacity: .8;
+            }
+            #{$this}__item:hover {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+/* Keyframes
+=========================================================== */
+@keyframes loop-slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
