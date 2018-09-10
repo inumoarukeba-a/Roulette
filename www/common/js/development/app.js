@@ -121,6 +121,11 @@ let   $theme        = doc.getElementById('theme01'),
 
 // Trigger
 $TRIGGER.addEventListener('click', function(e) {
+  ROULETTE();
+})
+
+// Functions
+const ROULETTE = function (e) {
   $PLACEHOLDER.classList.remove('-active');
   if(roulette_flag === false) {
     START_ANIMATION();
@@ -131,9 +136,8 @@ $TRIGGER.addEventListener('click', function(e) {
     STOP_ROULETTE();
     STOP_BUTTON();
   }
-})
+}
 
-// Functions
 const START_ANIMATION = function (e) {
   if(first_flag === false) {
     first_flag = true;
@@ -217,8 +221,8 @@ const STOP_BUTTON = function (e) {
 
 // Keydown
 win.addEventListener('keydown', function(e) {
+  const KEYCODE = event.keyCode;
   if(roulette_flag === false) {
-    const KEYCODE = event.keyCode;
     // F7
     if(KEYCODE == 118){
       $theme = doc.getElementById('theme01');
@@ -237,6 +241,10 @@ win.addEventListener('keydown', function(e) {
       $ROULETTE.classList.remove('-theme01','-theme02');
       $ROULETTE.classList.add('-theme03');
     }
+  }
+  // Space
+  if (KEYCODE == 32) {
+    ROULETTE();
   }
 });
 
