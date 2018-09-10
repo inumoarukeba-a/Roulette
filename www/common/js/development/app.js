@@ -19,8 +19,9 @@ const doc           = document,
 
 
 
-/* Background Animation
+/* 背景アニメーション
 =========================================================== */
+
 var w = win.innerWidth * win.devicePixelRatio,
     h = win.innerHeight * win.devicePixelRatio,
     canvas = document.getElementById('background'),
@@ -101,6 +102,7 @@ particles();
 
 /* ルーレット
 =========================================================== */
+
 // Variables
 const $ROULETTE     = doc.getElementById('roulette'),
       $TRIGGER      = doc.getElementById('trigger'),
@@ -165,10 +167,10 @@ const STOP_ANIMATION = function (e) {
 }
 
 const START_ROULETTE = function (e) {
-  // 音楽を停止
+  // ドラムエンドを停止
   $DRUM_END.pause();
   $DRUM_END.currentTime = 0;
-  // 音楽を再生
+  // ドラムロールを再生
   $DRUM_REPEAT.play();
   // 前のテーマを削除
   if ($active_theme !== undefined) {
@@ -192,16 +194,15 @@ const START_ROULETTE = function (e) {
 }
 
 const STOP_ROULETTE = function (e) {
-  // 音楽を停止
+  // ドラムロールを停止
   $DRUM_REPEAT.pause();
   $DRUM_REPEAT.currentTime = 0;
-  // 音楽を再生
+  // ドラムエンドを再生
   $DRUM_END.play();
   // インターバルをクリア
   clearTimeout(interval);
   // フラグを設定
   roulette_flag = false;
-  // $theme.classList.add('-stop');
 }
 
 const START_BUTTON = function (e) {
@@ -217,21 +218,21 @@ const STOP_BUTTON = function (e) {
 // Keydown
 win.addEventListener('keydown', function(e) {
   if(roulette_flag === false) {
-    const keyCode = event.keyCode;
-    // F1
-    if(keyCode == 112){
+    const KEYCODE = event.keyCode;
+    // F7
+    if(KEYCODE == 118){
       $theme = doc.getElementById('theme01');
       $ROULETTE.classList.remove('-theme02','-theme03');
       $ROULETTE.classList.add('-theme01');
     }
-    // F2
-    if (keyCode == 113) {
+    // F8
+    if (KEYCODE == 119) {
       $theme = doc.getElementById('theme02');
       $ROULETTE.classList.remove('-theme01','-theme03');
       $ROULETTE.classList.add('-theme02');
     }
-    // F3
-    if (keyCode == 114) {
+    // F9
+    if (KEYCODE == 120) {
       $theme = doc.getElementById('theme03');
       $ROULETTE.classList.remove('-theme01','-theme02');
       $ROULETTE.classList.add('-theme03');
@@ -245,7 +246,6 @@ win.addEventListener('keydown', function(e) {
 =========================================================== */
 // DOM構築後
 doc.addEventListener('DOMContentLoaded', function(e) {
-  canvasCalc();
 }, false);
 
 // ロード後
@@ -254,7 +254,6 @@ win.addEventListener('load', function(e) {
 
 // リサイズ
 win.addEventListener('resize', _.debounce(function(e) {
-  canvasCalc();
 }, 250));
 
 // スクロール
