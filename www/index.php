@@ -48,6 +48,9 @@
           </p>
           <ul id="theme01" class="roulette__list">
             <li>
+              体調など大丈夫ですか...？
+            </li>
+            <li>
               仕事専用の携帯電話欲しいですか？
             </li>
             <li>

@@ -22,18 +22,18 @@ const doc           = document,
 /* 背景アニメーション
 =========================================================== */
 
-var w = win.innerWidth * win.devicePixelRatio,
-    h = win.innerHeight * win.devicePixelRatio,
-    canvas = document.getElementById('background'),
-    ctx = canvas.getContext('2d'),
-    rate = 60,
-    arc = 382,
+var w       = win.innerWidth * win.devicePixelRatio,
+    h       = win.innerHeight * win.devicePixelRatio,
+    canvas  = doc.getElementById('background'),
+    ctx     = canvas.getContext('2d'),
+    rate    = 60,
+    arc     = 382,
     time,
     count,
-    size = 7,
-    speed = 10,
-    parts = new Array,
-    colors = ['#FFF','#f9cccc','#f39999'];
+    size    = 7,
+    speed   = 10,
+    parts   = new Array,
+    colors  = ['#FFF','#f9cccc','#f39999'];
 
 canvas.setAttribute('width',w);
 canvas.setAttribute('height',h);
@@ -113,7 +113,17 @@ const $ROULETTE     = doc.getElementById('roulette'),
       $HEADER       = doc.getElementById('header'),
       $HEADER_STAGE = doc.getElementById('header__playful'),
       DELAY         = 1.618,
-      TL            = new TimelineMax();
+      TL            = new TimelineMax(),
+      DUMMY         = [
+        '家庭ではどんなディレクターでしょうか？',
+        '今だから話せる失敗談を教えてください。',
+        '画面構成を作るとき、どんなポイントを意識されていますか？',
+        'わかりやすい文章やメールのコツとかありますか',
+        'ディレクターになって、最初に当たった壁はなんでしたか？',
+        '通勤時間って何をしていますか？',
+        '今後やってみたい案件・プロジェクトはありますか？',
+      ],
+      DUMMY_LENGTH  = DUMMY.length;
 
 let   $theme        = doc.getElementById('theme01'),
       interval      = -1,
@@ -189,7 +199,6 @@ const START_AUDIO = function(e) {
   // ランダム & 確率判定
   num    = Math.floor( Math.random() * 100 );
   source = '/common/audio/drum-repeat.mp3';
-  console.log(num);
 	if (num <= 32) source = '/common/audio/miyazaki-repeat02.mp3';
 	if (num <= 24) source = '/common/audio/miyazaki-repeat.mp3';
 	if (num <= 16) source = '/common/audio/ashida-repeat02.mp3';
@@ -254,6 +263,14 @@ const START_ROULETTE = function (e) {
   }
   // テーマ数を取得
   roulette_length = $theme.childElementCount;
+  // ダミー要素を追加
+  for( let i = 0;  i < DUMMY_LENGTH; i++ ){
+    const $LI   = doc.createElement('li');
+    const TEXT  = doc.createTextNode(DUMMY[i]);
+    $LI.className = '-dummy';
+    $theme.appendChild($LI);
+    $LI.appendChild(TEXT);
+  }
   // フラグを設定
   roulette_flag = true;
   // ルーレット
@@ -263,7 +280,7 @@ const START_ROULETTE = function (e) {
       e.classList.remove('-active');
     });
     // ランダムで表示
-    random = Math.floor( Math.random() * roulette_length );
+    random = Math.floor( Math.random() * ( roulette_length + DUMMY_LENGTH ) );
     $active_theme = $theme.children[random];
     $active_theme.classList.add('-active');
   }, 80);
@@ -274,6 +291,17 @@ const STOP_ROULETTE = function (e) {
   clearTimeout(interval);
   // フラグを設定
   roulette_flag = false;
+  // ダミーを削除
+  let $DUMMY_ELEMENTS = document.getElementsByClassName('-dummy');
+  for ( let i = 0; i < DUMMY_LENGTH; i++ ) {
+    $DUMMY_ELEMENTS[0].remove();
+  };
+  // 一度テーマをリセット（ダミーの関係上）
+  $active_theme.classList.remove('-active');
+  // ランダム表示
+  random = Math.floor( Math.random() * roulette_length );
+  $active_theme = $theme.children[random];
+  $active_theme.classList.add('-active');
 }
 
 // ボタン
