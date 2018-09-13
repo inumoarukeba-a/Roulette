@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+/* header
+   ========================================================================== */
+$ratio : 2;
+
+.header {
+  $this : &;
+  position: absolute;
+  transform-origin: center bottom;
+
+  // Logo
+  &__logo {
+    position: relative;
+    z-index: 1;
+    .a{fill:#fff;}.b{fill:none;stroke:#fff;stroke-miterlimit:10;}
+    svg {
+      width: 800px;
+      height: auto;
+    }
+  }
+
+  // Playful
+  &__playful {
+    opacity: 0;
+    width: (1333px / $ratio);
+    height: (2000px / $ratio);
+    margin: 0 auto;
+    transform-origin: center bottom;
+    @at-root {
+      // Ataru
+      #{$this}__ataru {
+        width: inherit;
+        height: inherit;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-image: url(../img/ataru.png);
+        animation: ataru-roulette .8s steps(10) infinite;
+        background-position: (-1333px / $ratio);
+        background-size: cover;
+        position: relative;
+        z-index: 1;
+      }
+      // Stage
+      #{$this}__stage {
+        transform: translateY(-100%);
+        text-align: center;
+        .a{fill:none;}
+        .b{clip-path:url(#a);}
+        .c{fill:#fff;}
+        .d{fill:#f3ff00;}
+        svg {
+          width: 480px;
+          height: auto;
+        }
+      }
+    }
+  }
+}
+
+@keyframes ataru-roulette {
+  to {
+    background-position: (-14663px / $ratio);
+  }
+}

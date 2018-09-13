@@ -25,6 +25,18 @@
 
 
   <main class="main">
+    <header id="header" class="header">
+      <h1 class="header__logo">
+        <?php include 'logo.php'; ?>
+      </h1>
+      <div id="header__playful" class="header__playful">
+        <div class="header__ataru">
+        </div>
+        <div class="header__stage">
+          <?php include 'stage.php'; ?>
+        </div>
+      </div>
+    </header>
     <section id="roulette" class="roulette">
       <div class="roulette__wrapper">
         <h2 class="roulette__heading">
@@ -258,12 +270,6 @@
 
   <aside>
     <canvas id="background"></canvas>
-    <audio id="drum-repeat" preload="auto" loop>
-      <source src="common/audio/drum-repeat.mp3" type="audio/mp3">
-    </audio>
-    <audio id="drum-end" preload="auto">
-      <source src="common/audio/drum-end.mp3" type="audio/mp3">
-    </audio>
   </aside>
 
 

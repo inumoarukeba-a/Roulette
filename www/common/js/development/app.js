@@ -103,123 +103,38 @@ particles();
 /* ルーレット
 =========================================================== */
 
-// Variables
+/* Variables
+───────────────────────── */
 const $ROULETTE     = doc.getElementById('roulette'),
       $TRIGGER      = doc.getElementById('trigger'),
       $PLACEHOLDER  = doc.getElementById('placeholder'),
       $DRUM_REPEAT  = doc.getElementById('drum-repeat'),
       $DRUM_END     = doc.getElementById('drum-end'),
+      $HEADER       = doc.getElementById('header'),
+      $HEADER_STAGE = doc.getElementById('header__playful'),
       DELAY         = 1.618,
       TL            = new TimelineMax();
+
 let   $theme        = doc.getElementById('theme01'),
       interval      = -1,
       first_flag    = false,
       roulette_flag = false,
       roulette_length,
       random,
-      $active_theme;
+      $active_theme,
 
-// Trigger
+      start_audio   = new Audio(),
+      end_audio     = new Audio(),
+      num,
+      source;
+
+
+/* Triggers
+───────────────────────── */
 $TRIGGER.addEventListener('click', function(e) {
   ROULETTE();
-})
+});
 
-// Functions
-const ROULETTE = function (e) {
-  $PLACEHOLDER.classList.remove('-active');
-  if(roulette_flag === false) {
-    START_ANIMATION();
-    START_ROULETTE();
-    START_BUTTON();
-  } else {
-    STOP_ANIMATION();
-    STOP_ROULETTE();
-    STOP_BUTTON();
-  }
-}
-
-const START_ANIMATION = function (e) {
-  if(first_flag === false) {
-    first_flag = true;
-    TL.to($ROULETTE, DELAY, {
-      y       : 0,
-      ease    : Bounce.easeOut,
-    });
-  } else {
-    TL.to($ROULETTE, DELAY/5, {
-      scale   : 0,
-      opacity : 0,
-      ease    : Power1.easeOut,
-    })
-    .set($ROULETTE, {
-      y       : -win.innerHeight,
-      opacity : 1,
-      scale   : 1,
-    })
-    .to($ROULETTE, DELAY, {
-      y       : 0,
-      ease    : Bounce.easeOut,
-    });
-  }
-}
-
-const STOP_ANIMATION = function (e) {
-  TweenMax.to($ROULETTE , .1618, {
-    scale     : 1.1382,
-    ease      : Power1.easeOut,
-  });
-}
-
-const START_ROULETTE = function (e) {
-  // ドラムエンドを停止
-  $DRUM_END.pause();
-  $DRUM_END.currentTime = 0;
-  // ドラムロールを再生
-  $DRUM_REPEAT.play();
-  // 前のテーマを削除
-  if ($active_theme !== undefined) {
-    $active_theme.remove();
-  }
-  // テーマ数を取得
-  roulette_length = $theme.childElementCount;
-  // フラグを設定
-  roulette_flag = true;
-  // ルーレット
-  interval = setInterval(function() {
-    // アクティブなテーマをリセット
-    Array.prototype.forEach.call($theme.children, function(e, index) {
-      e.classList.remove('-active');
-    });
-    // ランダムで表示
-    random = Math.floor( Math.random() * roulette_length );
-    $active_theme = $theme.children[random];
-    $active_theme.classList.add('-active');
-  }, 80);
-}
-
-const STOP_ROULETTE = function (e) {
-  // ドラムロールを停止
-  $DRUM_REPEAT.pause();
-  $DRUM_REPEAT.currentTime = 0;
-  // ドラムエンドを再生
-  $DRUM_END.play();
-  // インターバルをクリア
-  clearTimeout(interval);
-  // フラグを設定
-  roulette_flag = false;
-}
-
-const START_BUTTON = function (e) {
-  $TRIGGER.innerHTML = 'STOP';
-  $TRIGGER.classList.add('-stop');
-}
-
-const STOP_BUTTON = function (e) {
-  $TRIGGER.classList.remove('-stop');
-  $TRIGGER.innerHTML = 'START';
-}
-
-// Keydown
 win.addEventListener('keydown', function(e) {
   const KEYCODE = event.keyCode;
   if(roulette_flag === false) {
@@ -247,6 +162,130 @@ win.addEventListener('keydown', function(e) {
     ROULETTE();
   }
 });
+
+
+/* Functions
+───────────────────────── */
+const ROULETTE = function (e) {
+  $PLACEHOLDER.classList.remove('-active');
+  if(roulette_flag === false) {
+    START_AUDIO();
+    START_ANIMATION();
+    START_ROULETTE();
+    START_BUTTON();
+  } else {
+    STOP_AUDIO();
+    STOP_ANIMATION();
+    STOP_ROULETTE();
+    STOP_BUTTON();
+  }
+}
+
+// オーディオ
+const START_AUDIO = function(e) {
+  // オーディオストップ
+  end_audio.pause();
+  end_audio.currentTime = 0;
+  // ランダム & 確率判定
+  num    = Math.floor( Math.random() * 100 );
+  source = '/common/audio/drum-repeat.mp3';
+  console.log(num);
+	if (num <= 32) source = '/common/audio/miyazaki-repeat02.mp3';
+	if (num <= 24) source = '/common/audio/miyazaki-repeat.mp3';
+	if (num <= 16) source = '/common/audio/ashida-repeat02.mp3';
+	if (num <= 8)  source = '/common/audio/ashida-repeat.mp3';
+  // 再生
+  start_audio.src = source;
+  start_audio.loop = true;
+  start_audio.play();
+}
+
+const STOP_AUDIO = function(e) {
+  // オーディオストップ
+  start_audio.pause();
+  start_audio.currentTime = 0;
+  // ランダム & 確率判定
+  source = '/common/audio/drum-end.mp3';
+	if (num <= 32) source = '/common/audio/miyazaki-end.mp3';
+	if (num <= 16) source = '/common/audio/ashida-end.mp3';
+  // 再生
+  end_audio.src = source;
+  end_audio.play();
+}
+
+// アニメーション
+const START_ANIMATION = function (e) {
+  if(first_flag === false) {
+    first_flag = true;
+    TL.add('first')
+    .to($ROULETTE, DELAY, {
+      y       : 0,
+      ease    : Bounce.easeOut,
+    }, 'first')
+    .to($HEADER_STAGE, DELAY/4, {
+      scale   : .5,
+      ease    : Power1.easeOut,
+    }, 'first')
+    .to($HEADER, DELAY/4, {
+      y       : '-100%',
+      scale   : .382,
+      ease    : Power1.easeOut,
+    }, 'first');
+  } else {
+    TL.to($ROULETTE, DELAY/5, {
+      scale   : 1,
+      ease    : Power1.easeOut,
+    });
+  }
+}
+
+const STOP_ANIMATION = function (e) {
+  TweenMax.to($ROULETTE , .1618, {
+    scale     : 1.1382,
+    ease      : Power1.easeOut,
+  });
+}
+
+// ルーレット
+const START_ROULETTE = function (e) {
+  // 前のテーマを削除
+  if ($active_theme !== undefined) {
+    $active_theme.remove();
+  }
+  // テーマ数を取得
+  roulette_length = $theme.childElementCount;
+  // フラグを設定
+  roulette_flag = true;
+  // ルーレット
+  interval = setInterval(function() {
+    // アクティブなテーマをリセット
+    Array.prototype.forEach.call($theme.children, function(e, index) {
+      e.classList.remove('-active');
+    });
+    // ランダムで表示
+    random = Math.floor( Math.random() * roulette_length );
+    $active_theme = $theme.children[random];
+    $active_theme.classList.add('-active');
+  }, 80);
+}
+
+const STOP_ROULETTE = function (e) {
+  // インターバルをクリア
+  clearTimeout(interval);
+  // フラグを設定
+  roulette_flag = false;
+}
+
+// ボタン
+const START_BUTTON = function (e) {
+  $TRIGGER.innerHTML = 'STOP';
+  $TRIGGER.classList.add('-stop');
+}
+
+const STOP_BUTTON = function (e) {
+  $TRIGGER.classList.remove('-stop');
+  $TRIGGER.innerHTML = 'START';
+}
 
 
 

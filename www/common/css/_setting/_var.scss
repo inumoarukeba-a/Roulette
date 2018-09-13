@@ -25,20 +25,22 @@ $base-line-height: 2;
 $base-letter-spacing: .15em;
 
 // カラー
-$color-base               : #FFF;
-$color-text               : #555;
-$color-heading            : #333;
-$color-link               : $color-text;
-
+$color-red    : #e01300;
+$color-text   : #1a1a1a;
+$color-link   : $color-red;
 
 // フォント
-$font-TsukuGoPr5-R  : "FOT-筑紫ゴシック Pr5 R", sans-serif;
+$font-r       : 'IwaUDRGoPro-Th';
+$font-m       : 'IwaUDRGoPro-Md';
+$font-b       : 'IwaUDRGoPro-Bd';
+$font-e       : 'IwaUDRGoPro-Eb';
+$font-en      : 'Quicksand';
 
 // コンテンツ幅
 $contents-width: 1280px;
 
 // フォント
-$font-sans-serif: $font-TsukuGoPr5-R, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+$font-sans-serif: $font-r, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", sans-serif;
 
 
 
