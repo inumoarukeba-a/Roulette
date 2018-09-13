@@ -26,17 +26,24 @@
 
   <main class="main">
     <header id="header" class="header">
-      <h1 class="header__logo">
-        <?php include 'logo.php'; ?>
+      <h1 id="header__title" class="header__title">
+        <?php include 'title.php'; ?>
       </h1>
-      <div id="header__playful" class="header__playful">
-        <div class="header__ataru">
+      <h2 id="header__logo" class="header__logo">
+        <?php // include 'logo.php'; ?>
+        <div>ATAROULETTE</div>
+        <small>Produce by skill up group.</small>
+      </h2>
+    </header>
+    <aside id="ataru" class="ataru">
+      <div id="ataru__wrapper" class="ataru__wrapper">
+        <div class="ataru__image">
         </div>
-        <div class="header__stage">
+        <div class="ataru__stage">
           <?php include 'stage.php'; ?>
         </div>
       </div>
-    </header>
+    </aside>
     <section id="roulette" class="roulette">
       <div class="roulette__wrapper">
         <h2 class="roulette__heading">

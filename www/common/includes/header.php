@@ -26,6 +26,7 @@
   <!-- Web fonts -->
   <script src="//webfont.fontplus.jp/accessor/script/fontplus.js?AoLijhqMriI%3D&pm=1&aa=1&ab=1&ab=1" charset="utf-8"></script>
   <link href="//fonts.googleapis.com/css?family=Quicksand:700" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
 
   <!-- Analytics -->
 

@@ -14,16 +14,18 @@ import {TweenMax} from 'gsap';
 /* 共通変数
 =========================================================== */
 
-const doc           = document,
-      win           = window;
+const doc = document,
+      win = window;
 
 
 
 /* 背景アニメーション
 =========================================================== */
 
-var w       = win.innerWidth * win.devicePixelRatio,
-    h       = win.innerHeight * win.devicePixelRatio,
+// var w       = win.innerWidth * win.devicePixelRatio,
+//     h       = win.innerHeight * win.devicePixelRatio,
+var w       = win.innerWidth * 2,
+    h       = win.innerHeight * 2,
     canvas  = doc.getElementById('background'),
     ctx     = canvas.getContext('2d'),
     rate    = 60,
@@ -110,10 +112,11 @@ const $ROULETTE     = doc.getElementById('roulette'),
       $PLACEHOLDER  = doc.getElementById('placeholder'),
       $DRUM_REPEAT  = doc.getElementById('drum-repeat'),
       $DRUM_END     = doc.getElementById('drum-end'),
-      $HEADER       = doc.getElementById('header'),
-      $HEADER_STAGE = doc.getElementById('header__playful'),
+      $HEADER_TITLE = doc.getElementById('header__title'),
+      $HEADER_LOGO  = doc.getElementById('header__logo'),
+      $ATARU        = doc.getElementById('ataru'),
+      $ATARU_WRAPPER= doc.getElementById('ataru__wrapper'),
       DELAY         = 1.618,
-      TL            = new TimelineMax(),
       DUMMY         = [
         '家庭ではどんなディレクターでしょうか？',
         '今だから話せる失敗談を教えてください。',
@@ -199,10 +202,10 @@ const START_AUDIO = function(e) {
   // ランダム & 確率判定
   num    = Math.floor( Math.random() * 100 );
   source = '/common/audio/drum-repeat.mp3';
-	if (num <= 32) source = '/common/audio/miyazaki-repeat02.mp3';
-	if (num <= 24) source = '/common/audio/miyazaki-repeat.mp3';
-	if (num <= 16) source = '/common/audio/ashida-repeat02.mp3';
-	if (num <= 8)  source = '/common/audio/ashida-repeat.mp3';
+	if (num <= 24) source = '/common/audio/miyazaki-repeat02.mp3';
+	if (num <= 18) source = '/common/audio/miyazaki-repeat.mp3';
+	if (num <= 12) source = '/common/audio/ashida-repeat02.mp3';
+	if (num <= 6)  source = '/common/audio/ashida-repeat.mp3';
   // 再生
   start_audio.src = source;
   start_audio.loop = true;
@@ -215,8 +218,8 @@ const STOP_AUDIO = function(e) {
   start_audio.currentTime = 0;
   // ランダム & 確率判定
   source = '/common/audio/drum-end.mp3';
-	if (num <= 32) source = '/common/audio/miyazaki-end.mp3';
-	if (num <= 16) source = '/common/audio/ashida-end.mp3';
+	if (num <= 24) source = '/common/audio/miyazaki-end.mp3';
+	if (num <= 12) source = '/common/audio/ashida-end.mp3';
   // 再生
   end_audio.src = source;
   end_audio.play();
@@ -224,34 +227,84 @@ const STOP_AUDIO = function(e) {
 
 // アニメーション
 const START_ANIMATION = function (e) {
+  const TL = new TimelineMax();
   if(first_flag === false) {
     first_flag = true;
-    TL.add('first')
+    TL
+    .add('first')
+    .to($HEADER_TITLE, DELAY/3, {
+      y       : '-90%',
+      scale   : .382,
+      ease    : Power3.easeOut,
+    }, 'first')
+    .to($ATARU, DELAY/1.618, {
+      x       : 0,
+      ease    : Power1.easeOut,
+    }, 'first')
+    .to($HEADER_LOGO, DELAY/1.618, {
+      x       : 0,
+      ease    : Power1.easeIn,
+    }, 'first+=1')
+    .to($HEADER_LOGO, DELAY/3.82, {
+      textShadow: '0 0 2.5px #fff, 0 0 4px #fff, 0 0 10px #f3003d, 0 0 17.5px #f3003d, 0 0 20px #f3003d',
+      ease    : Power1.easeIn,
+    })
+    .add('logo-in')
     .to($ROULETTE, DELAY, {
       y       : 0,
       ease    : Bounce.easeOut,
-    }, 'first')
-    .to($HEADER_STAGE, DELAY/4, {
-      scale   : .5,
+    }, 'logo-in+=1.5')
+    .add('roulette-in')
+    .set($HEADER_LOGO, {
+      autoAlpha: 0,
+    }, 'roulette-in')
+    .to($ATARU_WRAPPER, DELAY/3.82, {
+      scale   : .08,
       ease    : Power1.easeOut,
-    }, 'first')
-    .to($HEADER, DELAY/4, {
+    }, 'roulette-in-=.5')
+    .add('scale-out')
+    .set($ATARU, {
+      position: 'absolute',
+      y       : '-90%',
+      width   : '100%',
+    }, 'scale-out+=.1')
+    .set($ATARU_WRAPPER, {
+      height    : 2000,
+      width     : '100%',
+      transformOrigin: 'center bottom',
+    }, 'scale-out+=.1')
+    .add('set-stage')
+    .to($ATARU, DELAY/5, {
       y       : '-100%',
-      scale   : .382,
       ease    : Power1.easeOut,
-    }, 'first');
+    }, 'set-stage+=.2');
   } else {
-    TL.to($ROULETTE, DELAY/5, {
+    TL
+    .to($ROULETTE, DELAY/5, {
       scale   : 1,
       ease    : Power1.easeOut,
+    })
+    .to($ATARU, DELAY/3, {
+      y       : '-100%',
+      ease    : Power1.easeOut,
+      onComplete: function(){
+        $ATARU.classList.remove('-stop');
+      }
     });
   }
 }
 
 const STOP_ANIMATION = function (e) {
-  TweenMax.to($ROULETTE , .1618, {
+  $ATARU.classList.add('-stop');
+  const TL = new TimelineMax();
+  TL
+  .to($ROULETTE , .1618, {
     scale     : 1.1382,
     ease      : Power1.easeOut,
+  })
+  .to($ATARU, DELAY/1.618, {
+    y       : '-90%',
+    ease    : Power1.easeOut,
   });
 }
 
