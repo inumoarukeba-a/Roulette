@@ -1,58 +1,52 @@
 {
-  "name": "Web-Develop-Template",
+  "name": "Webpack-starter02",
   "version": "1.0.0",
-  "description": "- babel + ES6 - browserSync - sass - ~~pug~~ - cache - watch - notify - plumber - progeny - rename - replace - image - fractal - postcss",
-  "main": "gulpfile.babel.js",
-  "dependencies": {
-    "gulp-sass-inheritance": "^1.1.0"
-  },
-  "devDependencies": {
-    "@frctl/fractal": "^1.1.7",
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
-    "babelify": "^8.0.0",
-    "browser-sync": "^2.24.4",
-    "browserify": "^16.2.2",
-    "css-mqpacker": "^7.0.0",
-    "gsap": "^2.0.0",
-    "gulp": "^3.9.1",
-    "gulp-asset-cache": "^1.1.5",
-    "gulp-autoprefixer": "^6.0.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-cached": "^1.1.1",
-    "gulp-changed": "^3.2.0",
-    "gulp-cssmin": "^0.2.0",
-    "gulp-if": "^2.0.2",
-    "gulp-image": "^4.3.0",
-    "gulp-notify": "^3.2.0",
-    "gulp-plumber": "^1.2.0",
-    "gulp-postcss": "^8.0.0",
-    "gulp-progeny": "^0.4.1",
-    "gulp-rename": "^1.2.3",
-    "gulp-replace": "^1.0.0",
-    "gulp-sass": "^4.0.1",
-    "gulp-sass-glob": "^1.0.9",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify": "^3.0.0",
-    "gulp-watch": "^5.0.0",
-    "lodash": "^4.17.10",
-    "postcss-sort-alphabetically": "^1.1.1",
-    "swiper": "^4.2.6",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
-  },
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "launch": "webpack-dev-server --open --mode production",
+    "start": "webpack-dev-server --open --mode development"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/inumoarukeba-a/Web-Develop-Template.git"
+    "url": "git+https://github.com/inumoarukeba-a/Webpack-starter02.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ataru Nakano <atarunakano@gmail.com> (https://github.com/inumoarukeba-a)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/inumoarukeba-a/Web-Develop-Template/issues"
+    "url": "https://github.com/inumoarukeba-a/Webpack-starter02/issues"
   },
-  "homepage": "https://github.com/inumoarukeba-a/Web-Develop-Template#readme"
+  "homepage": "https://github.com/inumoarukeba-a/Webpack-starter02#readme",
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "autoprefixer": "^9.7.4",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-loader": "^3.0.3",
+    "eslint-plugin-import": "^2.20.0",
+    "file-loader": "^5.0.2",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "live-server": "^1.2.1",
+    "node-sass": "^4.13.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^3.0.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "dependencies": {
+    "gsap": "^3.2.2",
+    "lodash": "^4.17.15",
+    "mini-css-extract-plugin": "^0.9.0"
+  }
 }

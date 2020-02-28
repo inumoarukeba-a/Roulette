@@ -2,10 +2,10 @@
 
 /* ataru
    ========================================================================== */
-$ratio : 1;
+$ratio: 1;
 
 .ataru {
-  $this : &;
+  $this: &;
   position: fixed;
   left: 0;
   top: 0;
@@ -31,8 +31,8 @@ $ratio : 1;
     height: (2000px / $ratio);
     overflow: hidden;
     background-repeat: no-repeat;
-    background-image: url(../img/ataru.png);
-    animation: ataru-roulette .8s steps(10) infinite;
+    background-image: url(../images/ataru.png);
+    animation: ataru-roulette 0.8s steps(10) infinite;
     background-position: (-1333px / $ratio);
     background-size: cover;
     position: relative;
@@ -48,10 +48,18 @@ $ratio : 1;
   &__stage {
     transform: translateY(-100%);
     text-align: center;
-    .a{fill:none;}
-    .b{clip-path:url(#a);}
-    .c{fill:#fff;}
-    .d{fill:#f3ff00;}
+    .a {
+      fill: none;
+    }
+    .b {
+      clip-path: url(#a);
+    }
+    .c {
+      fill: #fff;
+    }
+    .d {
+      fill: #f3ff00;
+    }
     svg {
       width: 1080px;
       height: auto;
@@ -63,7 +71,9 @@ $ratio : 1;
     position: fixed;
     left: 0;
     top: 0;
-    .a{fill:#fff;}
+    .a {
+      fill: #fff;
+    }
   }
 }
 
